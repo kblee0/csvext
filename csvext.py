@@ -41,10 +41,10 @@ def extract_columns_to_new_csv(param: object):
 if __name__ == "__main__":
     # ArgumentParser 객체 생성
     parser = argparse.ArgumentParser(prog='csvext', description='CSV Extractor.')
-    parser.add_argument('-c', '--columns', metavar='column_csv_filename', help='columns csv file name')
-    parser.add_argument('-o', '--output', metavar='output_filename', help='output csv file name')
-    parser.add_argument('--ienc', metavar='input_encoding', help='input encoding', default='utf-8')
-    parser.add_argument('--oenc', metavar='output_encoding', help='output encoding', default='utf-8-sig')
+    parser.add_argument('-c', '--columns', metavar='column_csv_filename', required=True, help='columns csv file name')
+    parser.add_argument('-o', '--output', metavar='output_filename', required=True, help='output csv file name')
+    parser.add_argument('--ienc', metavar='input_encoding', help='input encoding (default utf-8)', default='utf-8')
+    parser.add_argument('--oenc', metavar='output_encoding', help='output encoding (default utf-8-sig)', default='utf-8-sig')
     parser.add_argument('-n', '--noheader', help='no print csv header', action='store_true', default=False)
     parser.add_argument('files', nargs='+', help='Input csv file name')
 
