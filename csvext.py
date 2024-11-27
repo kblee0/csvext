@@ -1,4 +1,5 @@
 import argparse
+import csv
 import glob
 
 import pandas as pd
@@ -22,18 +23,18 @@ def extract_columns_to_new_csv(param: object):
             if column in df.columns:
                 new_df[column] = df[column]
 
-                for i in range(1,11):
+                for i in range(1,100):
                     rcol = column if i == 0 else column + "." + str(i)
                     if rcol in df.columns:
                         new_df[column] = new_df[column].astype(str) + ',' + df[rcol].astype(str)
                     else:
-                        if i > 1: new_df[column] = new_df[column].str.rstrip(',')
                         break
+                if i > 1: new_df[column] = new_df[column].str.rstrip(',')
             else:
                 new_df[column] = ""
 
         # 새로운 CSV 파일로 저장
-        new_df.to_csv(param.output, mode=write_mode, encoding=param.oenc, index=False, header=print_head) #, quoting=csv.QUOTE_ALL)
+        new_df.to_csv(param.output, mode=write_mode, encoding=param.oenc, index=False, header=print_head, quoting=csv.QUOTE_ALL)
         write_mode = 'a'
         print_head = False
         if oencoding == 'utf-8-sig': oencoding = 'utf-8'
@@ -52,7 +53,7 @@ if __name__ == "__main__":
 
     rfiles = []
     for file in args.files:
-        rfiles.extend(glob.glob(file))
+        rfiles.extend(sorted(glob.glob(file)))
 
     args.files = rfiles
 
